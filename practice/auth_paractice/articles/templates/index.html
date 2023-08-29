@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+
+{% block body %}
+
+{% for article in articles %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{article.title}}</h5>
+        <p class="card-text">{{article.content}}</p>
+        <p class="card-text">{{article.user}}</p>
+    </div>
+
+
+    {% if request.user.is_authenticated %}
+    <div class="card-footer">
+        <form action="{% url 'articles:comment_create' article_id=article.id %}" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit">
+        </form>
+    </div>
+
+    {% endif %}
+
+    <div class="card-footer">
+        {% for comment in article.comment_set.all %}
+            <p>{{comment.user}} : {{comment.content}}</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

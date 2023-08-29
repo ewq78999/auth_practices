@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+
+{% block body %}
+
+{% if request.resolver_match.url_name == 'signup' %}
+    <h1>회원가입</h1>
+
+{% else %}
+    <h1>로그인</h1>
+
+{% endif %}
+
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-primary">
+
+</form>
+
+
+{% endblock %}
